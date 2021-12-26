@@ -1,28 +1,15 @@
-const sqlite = require("sqlite3")
+const { Sequelize } = require("sequelize")
+const User = require("../models/User")
+const FederatedCredential = require("../models/FederatedCredential")
 
-const user = require("../models/user")
+const initialize = async () => {
+    const sequelize = new Sequelize({dialect: "sqlite", storage: "databases/database.sqlite"})
+    await sequelize.authenticate()
 
-let db = null
+    //Init models
+    User.initModel(sequelize)
+    FederatedCredential.initModel(sequelize)
 
-const initialize = () => {
-    if (db) return
-    db = new sqlite.Database("authapp.db", sqlite.OPEN_READWRITE | sqlite.OPEN_CREATE, (err) => {
-        if (err) {
-            console.log("Something went wrong when oppening / creating the database: " + err.toString())
-        } else {
-            console.log("Database successfully opened")
-        }
-    })
-
-    db.run(user.tableCreationSql, (err) => {
-        if (err) console.log(err.message)
-    })
-
+    await sequelize.sync()
 }
-
-module.exports = {
-    initialize,
-    getDb: () => {
-        return db
-    }
-}
+module.exports.initialize = initialize;

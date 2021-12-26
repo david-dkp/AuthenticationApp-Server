@@ -21,6 +21,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "sequelize": "^7.0.0-alpha.2",
+    "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2"
   },
   "devDependencies": {

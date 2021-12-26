@@ -1,6 +1,7 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const database = require("./configs/database")
+const { getUserById } = require("./models/User");
 
 const app = express()
 

@@ -1332,66 +1332,105 @@
     <argument id="490" parent="169">
       <Position>1</Position>
     </argument>
-    <table id="491" parent="170" name="sqlite_master">
+    <table id="491" parent="170" name="federated_credentials_user"/>
+    <table id="492" parent="170" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="492" parent="170" name="user_table"/>
-    <column id="493" parent="491" name="type">
-      <DataType>text|0s</DataType>
+    <table id="493" parent="170" name="sqlite_sequence">
+      <System>1</System>
+    </table>
+    <table id="494" parent="170" name="user_table"/>
+    <column id="495" parent="491" name="id">
+      <DataType>INTEGER|0s</DataType>
       <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="494" parent="491" name="name">
-      <DataType>text|0s</DataType>
+    <column id="496" parent="491" name="user_id">
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="495" parent="491" name="tbl_name">
-      <DataType>text|0s</DataType>
-      <Position>3</Position>
-    </column>
-    <column id="496" parent="491" name="rootpage">
-      <DataType>int|0s</DataType>
-      <Position>4</Position>
-    </column>
-    <column id="497" parent="491" name="sql">
-      <DataType>text|0s</DataType>
-      <Position>5</Position>
-    </column>
-    <column id="498" parent="492" name="id">
-      <DataType>TEXT|0s</DataType>
-      <Position>1</Position>
-    </column>
-    <column id="499" parent="492" name="name">
-      <DataType>TEXT|0s</DataType>
-      <Position>2</Position>
-    </column>
-    <column id="500" parent="492" name="email">
+    <column id="497" parent="491" name="provider">
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="501" parent="492" name="password">
+    <column id="498" parent="491" name="subject">
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <key id="499" parent="491">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="500" parent="492" name="type">
+      <DataType>text|0s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="501" parent="492" name="name">
+      <DataType>text|0s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="502" parent="492" name="tbl_name">
+      <DataType>text|0s</DataType>
+      <Position>3</Position>
+    </column>
+    <column id="503" parent="492" name="rootpage">
+      <DataType>int|0s</DataType>
+      <Position>4</Position>
+    </column>
+    <column id="504" parent="492" name="sql">
+      <DataType>text|0s</DataType>
+      <Position>5</Position>
+    </column>
+    <column id="505" parent="493" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="506" parent="493" name="seq">
+      <Position>2</Position>
+    </column>
+    <column id="507" parent="494" name="id">
+      <DataType>TEXT|0s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="508" parent="494" name="name">
+      <DataType>TEXT|0s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="509" parent="494" name="email">
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="510" parent="494" name="password">
       <DataType>TEXT|0s</DataType>
       <Position>4</Position>
     </column>
-    <column id="502" parent="492" name="bio">
+    <column id="511" parent="494" name="bio">
       <DataType>TEXT|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="503" parent="492" name="phone_number">
+    <column id="512" parent="494" name="phone_number">
       <DataType>TEXT|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="504" parent="492" name="profile_picture_path">
+    <column id="513" parent="494" name="profile_picture_path">
       <DataType>TEXT|0s</DataType>
       <Position>7</Position>
     </column>
-    <index id="505" parent="492" name="sqlite_autoindex_user_table_1">
+    <column id="514" parent="494" name="created_at">
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <index id="515" parent="494" name="sqlite_autoindex_user_table_1">
       <ColNames>id</ColNames>
       <ColumnCollations></ColumnCollations>
       <NameSurrogate>1</NameSurrogate>
       <Unique>1</Unique>
     </index>
-    <key id="506" parent="492">
+    <key id="516" parent="494">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
       <UnderlyingIndexName>sqlite_autoindex_user_table_1</UnderlyingIndexName>
