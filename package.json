@@ -13,6 +13,7 @@
     "body-parser": "^1.19.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
+    "email-validator": "^2.0.4",
     "express": "^4.17.2",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
@@ -23,6 +24,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "password-validator": "^5.2.1",
     "sequelize": "^7.0.0-alpha.2",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2"

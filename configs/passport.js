@@ -9,7 +9,7 @@ const initialize = (passport) => {
             if (!user) {
                 return done(null, false, {message: "Incorrect email."})
             }
-            const verified = password === user.password//await bcrypt.compare(password, user.password)
+            const verified = await bcrypt.compare(password, user.password)
             if (!verified) return done(null, false, {message: "Incorrect password."})
             return done(null, user)
         } catch (e) {
