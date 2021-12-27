@@ -29,6 +29,7 @@ class FederatedCredential extends Model {
                 }
             },
             {
+                timestamps: false,
                 sequelize,
                 modelName: "FederatedCredential",
                 tableName: "federated_credential_table"

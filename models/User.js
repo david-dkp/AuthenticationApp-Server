@@ -28,7 +28,7 @@ class User extends Model {
             profilePicturePath: {
                 type: DataTypes.TEXT
             }
-        }, {sequelize, modelName: "User", tableName: "user_table"})
+        }, {timestamps: false, sequelize, modelName: "User", tableName: "user_table"})
     }
 }
 
