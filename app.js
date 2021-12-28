@@ -5,9 +5,10 @@ const dotenv = require("dotenv")
 const database = require("./configs/database")
 const passport = require("passport")
 const passportConfig = require("./configs/passport")
-const checkAuth = require("./middlewares/checkAuth");
 const register = require("./controllers/register")
 const checkNotAuth = require("./middlewares/checkNotAuth");
+const oauth2Router = require("./routes/oauth2Router");
+const loginRouter = require("./routes/loginRouter")
 
 const app = express()
 
@@ -22,18 +23,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.post("/login", checkNotAuth({authRedirect: "/"}), passport.authenticate("local", { failureRedirect: "/login"}), (req, res) => {
-    res.redirect("/")
-})
-
-app.get("/login", checkNotAuth({authRedirect: "/"}),(req, res) => res.send("/login is not awake"))
+//Routes
+app.use("/login", loginRouter)
+app.use("/oauth2", oauth2Router)
 
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
 
-app.get("/", checkAuth({notAuthRedirect: "/login"}),(req, res) => {
-    return res.send("On Home Page")
-})
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port: ${process.env.PORT}`)
 })
+
