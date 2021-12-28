@@ -13,7 +13,8 @@ const loginRouter = require("./routes/loginRouter")
 const app = express()
 
 //Config
-dotenv.config()
+dotenv.config({path: "keys.env"})
+console.log(process.env)
 database.initialize()
 passportConfig.initialize(passport)
 

@@ -5,12 +5,6 @@ const Room = require("./Room");
 class Member extends Model {
     static initModel(sequelize) {
         Member.init({
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
-                allowNull: false
-            },
             userId: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -30,7 +24,6 @@ class Member extends Model {
             joinedAt: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                defaultValue: Date.now()
             }
         }, {
             sequelize,
