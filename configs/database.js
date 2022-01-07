@@ -5,7 +5,11 @@ const Room = require("../models/Room");
 const Member = require("../models/Member");
 
 const initialize = async () => {
-    const sequelize = new Sequelize({dialect: "sqlite", storage: "databases/database.sqlite"})
+    const sequelize = new Sequelize({
+        dialect: "sqlite",
+        storage: "databases/database.sqlite",
+        logging: false,
+    })
     await sequelize.authenticate()
 
     //Init models
