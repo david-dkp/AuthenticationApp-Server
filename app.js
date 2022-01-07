@@ -1,5 +1,4 @@
 const express = require("express")
-const session = require("express-session")
 const bodyParser = require("body-parser")
 const dotenv = require("dotenv")
 const database = require("./configs/database")
@@ -9,24 +8,29 @@ const register = require("./controllers/register")
 const checkNotAuth = require("./middlewares/checkNotAuth");
 const oauth2Router = require("./routes/oauth2Router");
 const loginRouter = require("./routes/loginRouter")
+const userRouter = require("./routes/userRouter");
+
+const helmet = require("helmet")
 
 const app = express()
 
 //Config
 dotenv.config({path: "keys.env"})
-console.log(process.env)
 database.initialize()
 passportConfig.initialize(passport)
 
-app.use(session({secret: "secret"}))
+//Middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
-app.use(passport.session())
+app.use(helmet())
+
+app.use(express.static("pictures"))
 
 //Routes
 app.use("/login", loginRouter)
 app.use("/oauth2", oauth2Router)
+app.use("/users", userRouter)
 
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
 

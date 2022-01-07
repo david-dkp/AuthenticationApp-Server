@@ -1,8 +1,11 @@
 const bcrypt = require("bcrypt")
 const User = require("../models/User");
+const FederatedCredential = require("../models/FederatedCredential");
+
+//Strategies
 const LocalStrategy = require("passport-local").Strategy
 const GoogleStrategy = require("passport-google-oidc")
-const FederatedCredential = require("../models/FederatedCredential");
+const JwtStrategy = require("passport-jwt").Strategy
 
 const initialize = (passport) => {
     passport.use(new LocalStrategy({
@@ -48,7 +51,7 @@ const initialize = (passport) => {
                     }
 
                     await FederatedCredential.create({userId: newUser.id, provider: issuer, subject: profile.id})
-                    cb(null, newUser)
+                    cb(null, newUser.toJSON())
                 } else {
                     let user = await User.findOne({where: {id: federatedCredential.userId}})
 
@@ -59,24 +62,29 @@ const initialize = (passport) => {
                             name: profile.displayName
                         })
                     }
-                    cb(null, user)
+                    cb(null, user.toJSON())
                 }
             } catch (e) {
                 cb(e)
             }
         }))
 
-    passport.serializeUser((user, done) => {
-        done(null, user.id)
-    })
+    passport.use(new JwtStrategy({}, async (payload, done) => {
+        const userId = payload.userId
 
-    passport.deserializeUser(async (id, done) => {
         try {
-            done(null, await User.findByPk(id))
+            const user = await User.findByPk(userId)
+
+            if (!user) {
+                return done(null, false)
+            }
+
+            return done(null, user.toJSON())
         } catch (e) {
-            done(e, false)
+            return done(e)
         }
-    })
+
+    }))
 }
 
 module.exports.initialize = initialize
