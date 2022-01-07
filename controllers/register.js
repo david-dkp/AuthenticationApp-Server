@@ -12,20 +12,22 @@ const passwordErrorMessage = "Passport must be between 6 and 18 in length, and m
 
 const createUser = async (req, res) => {
     const { email, password } = req.body
-    if (!email || !password) return res.status(400).json({error: "'email' or 'password' fields are missing"})
+    if (!email || !password) return res.status(400).json({type: "error", message: "'email' or 'password' fields are missing"})
 
     const cleanEmail = email.trim()
     const cleanPassword = password.trim()
 
     const exists = await User.findOne({where: {email: cleanEmail}})
 
-    if (exists) return res.status(200).json({error: "The account already exists."})
+    if (exists) return res.status(200).json({type: "error", message: "The account already exists."})
 
     const emailValid = emailValidator.validate(email)
     const passwordValid = passwordSchema.validate(cleanPassword)
 
     if (!emailValid || !passwordValid) {
         return res.status(200).json({
+            type: "error",
+            message: "Invalid inputs",
             error: {
                 email: emailValid ? null : "The email must be in a correct format",
                 password: passwordValid ? null : passwordErrorMessage
