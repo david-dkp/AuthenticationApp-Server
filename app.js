@@ -1,4 +1,5 @@
 const express = require("express")
+const session = require("express-session")
 const bodyParser = require("body-parser")
 const dotenv = require("dotenv")
 const database = require("./configs/database")
@@ -8,6 +9,7 @@ const register = require("./controllers/register")
 const checkNotAuth = require("./middlewares/checkNotAuth");
 const oauth2Router = require("./routes/oauth2Router");
 const loginRouter = require("./routes/loginRouter")
+const usersRouter = require("./routes/usersRouter");
 const userRouter = require("./routes/userRouter");
 
 const helmet = require("helmet")
@@ -22,15 +24,16 @@ passportConfig.initialize(passport)
 //Middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(session({secret: "secret"}))
 app.use(passport.initialize())
 app.use(helmet())
-
 app.use(express.static("pictures"))
 
 //Routes
 app.use("/login", loginRouter)
 app.use("/oauth2", oauth2Router)
-app.use("/users", userRouter)
+app.use("/users", usersRouter)
+app.use("/user", userRouter)
 
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
 
