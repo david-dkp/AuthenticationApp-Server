@@ -40,7 +40,11 @@ const initialize = (passport) => {
                     let newUser = await User.findOne({where: {email: profile.emails[0].value}})
 
                     if (!newUser) {
-                        newUser = await User.create({email: profile.emails[0].value, name: profile.displayName})
+                        newUser = await User.create({
+                            profilePicturePath: profile.photos[0].value,
+                            email: profile.emails[0].value,
+                            name: profile.displayName
+                        })
                     }
 
                     await FederatedCredential.create({userId: newUser.id, provider: issuer, subject: profile.id})
@@ -49,7 +53,11 @@ const initialize = (passport) => {
                     let user = await User.findOne({where: {id: federatedCredential.userId}})
 
                     if (!user) {
-                        user = await User.create({email: profile.emails[0].value, name: profile.displayName})
+                        user = await User.create({
+                            profilePicturePath: profile.photos[0].value,
+                            email: profile.emails[0].value,
+                            name: profile.displayName
+                        })
                     }
                     cb(null, user)
                 }
