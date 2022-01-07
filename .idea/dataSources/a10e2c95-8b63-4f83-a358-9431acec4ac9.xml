@@ -1333,42 +1333,34 @@
       <Position>1</Position>
     </argument>
     <table id="491" parent="170" name="federated_credential_table"/>
-    <table id="492" parent="170" name="sqlite_master">
+    <table id="492" parent="170" name="member_table"/>
+    <table id="493" parent="170" name="room_table"/>
+    <table id="494" parent="170" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="493" parent="170" name="sqlite_sequence">
+    <table id="495" parent="170" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <table id="494" parent="170" name="user_table"/>
-    <column id="495" parent="491" name="id">
+    <table id="496" parent="170" name="user_table"/>
+    <column id="497" parent="491" name="id">
       <DataType>INTEGER|0s</DataType>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="496" parent="491" name="userId">
+    <column id="498" parent="491" name="userId">
       <DataType>INTEGER|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="497" parent="491" name="provider">
+    <column id="499" parent="491" name="provider">
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="498" parent="491" name="subject">
+    <column id="500" parent="491" name="subject">
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
-    </column>
-    <column id="499" parent="491" name="createdAt">
-      <DataType>DATETIME|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>5</Position>
-    </column>
-    <column id="500" parent="491" name="updatedAt">
-      <DataType>DATETIME|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>6</Position>
     </column>
     <foreign-key id="501" parent="491">
       <ColNames>userId</ColNames>
@@ -1379,73 +1371,120 @@
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="503" parent="492" name="type">
-      <DataType>text|0s</DataType>
+    <column id="503" parent="492" name="userId">
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="504" parent="492" name="name">
-      <DataType>text|0s</DataType>
+    <column id="504" parent="492" name="roomId">
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="505" parent="492" name="tbl_name">
-      <DataType>text|0s</DataType>
+    <column id="505" parent="492" name="joinedAt">
+      <DataType>INTEGER|0s</DataType>
+      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="506" parent="492" name="rootpage">
-      <DataType>int|0s</DataType>
-      <Position>4</Position>
-    </column>
-    <column id="507" parent="492" name="sql">
-      <DataType>text|0s</DataType>
-      <Position>5</Position>
-    </column>
-    <column id="508" parent="493" name="name">
-      <Position>1</Position>
-    </column>
-    <column id="509" parent="493" name="seq">
-      <Position>2</Position>
-    </column>
-    <column id="510" parent="494" name="id">
+    <foreign-key id="506" parent="492">
+      <ColNames>userId</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>user_table</RefTableName>
+    </foreign-key>
+    <foreign-key id="507" parent="492">
+      <ColNames>roomId</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>room_table</RefTableName>
+    </foreign-key>
+    <index id="508" parent="492" name="sqlite_autoindex_member_table_1">
+      <ColNames>userId
+roomId</ColNames>
+      <ColumnCollations>
+</ColumnCollations>
+      <NameSurrogate>1</NameSurrogate>
+      <Unique>1</Unique>
+    </index>
+    <key id="509" parent="492">
+      <ColNames>userId
+roomId</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>sqlite_autoindex_member_table_1</UnderlyingIndexName>
+    </key>
+    <column id="510" parent="493" name="id">
       <DataType>INTEGER|0s</DataType>
       <Position>1</Position>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="511" parent="494" name="name">
+    <column id="511" parent="493" name="name">
+      <DataType>TEXT|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="512" parent="493" name="description">
+      <DataType>TEXT|0s</DataType>
+      <Position>3</Position>
+    </column>
+    <key id="513" parent="493">
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="514" parent="494" name="type">
+      <DataType>text|0s</DataType>
+      <Position>1</Position>
+    </column>
+    <column id="515" parent="494" name="name">
+      <DataType>text|0s</DataType>
+      <Position>2</Position>
+    </column>
+    <column id="516" parent="494" name="tbl_name">
+      <DataType>text|0s</DataType>
+      <Position>3</Position>
+    </column>
+    <column id="517" parent="494" name="rootpage">
+      <DataType>int|0s</DataType>
+      <Position>4</Position>
+    </column>
+    <column id="518" parent="494" name="sql">
+      <DataType>text|0s</DataType>
+      <Position>5</Position>
+    </column>
+    <column id="519" parent="495" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="520" parent="495" name="seq">
+      <Position>2</Position>
+    </column>
+    <column id="521" parent="496" name="id">
+      <DataType>INTEGER|0s</DataType>
+      <Position>1</Position>
+      <SequenceIdentity>null</SequenceIdentity>
+    </column>
+    <column id="522" parent="496" name="name">
       <DataType>TEXT|0s</DataType>
       <Position>2</Position>
     </column>
-    <column id="512" parent="494" name="email">
+    <column id="523" parent="496" name="email">
       <DataType>TEXT|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="513" parent="494" name="password">
+    <column id="524" parent="496" name="password">
       <DataType>TEXT|0s</DataType>
       <Position>4</Position>
     </column>
-    <column id="514" parent="494" name="bio">
+    <column id="525" parent="496" name="bio">
       <DataType>TEXT|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="515" parent="494" name="phoneNumber">
+    <column id="526" parent="496" name="phoneNumber">
       <DataType>TEXT|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="516" parent="494" name="profilePicturePath">
+    <column id="527" parent="496" name="profilePicturePath">
       <DataType>TEXT|0s</DataType>
       <Position>7</Position>
     </column>
-    <column id="517" parent="494" name="createdAt">
-      <DataType>DATETIME|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>8</Position>
-    </column>
-    <column id="518" parent="494" name="updatedAt">
-      <DataType>DATETIME|0s</DataType>
-      <NotNull>1</NotNull>
-      <Position>9</Position>
-    </column>
-    <key id="519" parent="494">
+    <key id="528" parent="496">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
