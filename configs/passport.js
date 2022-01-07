@@ -6,6 +6,7 @@ const FederatedCredential = require("../models/FederatedCredential");
 const LocalStrategy = require("passport-local").Strategy
 const GoogleStrategy = require("passport-google-oidc")
 const JwtStrategy = require("passport-jwt").Strategy
+const ExtractJwt = require("passport-jwt").ExtractJwt
 
 const initialize = (passport) => {
     passport.use(new LocalStrategy({
@@ -19,7 +20,7 @@ const initialize = (passport) => {
             }
             const verified = await bcrypt.compare(password, user.password)
             if (!verified) return done(null, false, {message: "Incorrect password."})
-            return done(null, user)
+            return done(null, user.toJSON())
         } catch (e) {
             done(e)
         }
@@ -44,7 +45,6 @@ const initialize = (passport) => {
 
                     if (!newUser) {
                         newUser = await User.create({
-                            profilePicturePath: profile.photos[0].value,
                             email: profile.emails[0].value,
                             name: profile.displayName
                         })
@@ -57,7 +57,6 @@ const initialize = (passport) => {
 
                     if (!user) {
                         user = await User.create({
-                            profilePicturePath: profile.photos[0].value,
                             email: profile.emails[0].value,
                             name: profile.displayName
                         })
@@ -69,7 +68,12 @@ const initialize = (passport) => {
             }
         }))
 
-    passport.use(new JwtStrategy({}, async (payload, done) => {
+    const jwtOptions = {
+        jwtFromRequest: ExtractJwt.fromHeader("Authorization"),
+        secretOrKey: "secret"
+    }
+
+    passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
         const userId = payload.userId
 
         try {
@@ -85,6 +89,13 @@ const initialize = (passport) => {
         }
 
     }))
+
+    passport.serializeUser(function(user, done) {
+        done(null, user)
+    })
+    passport.deserializeUser(function(obj, done) {
+        done(null, obj)
+    })
 }
 
 module.exports.initialize = initialize
