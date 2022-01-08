@@ -4,7 +4,7 @@ const Router = require("express").Router
 const jwt = require("jsonwebtoken")
 const router = Router()
 
-router.use(checkNotAuth({}))
+router.use(checkNotAuth({authRedirect: "/"}))
 
 const createAndSendJwt = (req, res) => {
     jwt.sign(
