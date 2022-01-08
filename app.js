@@ -10,7 +10,6 @@ const register = require("./controllers/register")
 const checkNotAuth = require("./middlewares/checkNotAuth");
 const oauth2Router = require("./routes/oauth2Router");
 const loginRouter = require("./routes/loginRouter")
-const usersRouter = require("./routes/usersRouter");
 const userRouter = require("./routes/userRouter");
 
 const helmet = require("helmet")
@@ -34,7 +33,6 @@ app.use(express.static("pictures"))
 //Routes
 app.use("/login", loginRouter)
 app.use("/oauth2", oauth2Router)
-app.use("/users", usersRouter)
 app.use("/user", userRouter)
 
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
