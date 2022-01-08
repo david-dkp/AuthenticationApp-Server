@@ -1,6 +1,7 @@
 const express = require("express")
 const session = require("express-session")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 const dotenv = require("dotenv")
 const database = require("./configs/database")
 const passport = require("passport")
@@ -22,6 +23,7 @@ database.initialize()
 passportConfig.initialize(passport)
 
 //Middlewares
+app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(session({secret: "secret"}))
