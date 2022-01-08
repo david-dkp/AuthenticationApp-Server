@@ -7,6 +7,4 @@ router.use(checkAuth({notAuthRedirect: "/login"}))
 
 router.get("/:id", users.getUser)
 
-router.put("/", users.uploadPicture, users.updateUser)
-
 module.exports = router
