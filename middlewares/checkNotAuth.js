@@ -1,8 +1,7 @@
-const passport = require("passport");
 const jwt = require("jsonwebtoken")
 
 const checkNotAuth = ({authRedirect}) => (req, res, next) => {
-    const token = req.headers["Authorization"]
+    const token = req.cookies["jwt"]
     if (!token) {
         return next()
     }
