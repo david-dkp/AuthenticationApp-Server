@@ -1,12 +1,7 @@
 const emailValidator = require("email-validator")
-const Schema = require("password-validator")
 const User = require("../models/User");
 const bcrypt = require("bcrypt")
-
-const passwordSchema = new Schema()
-    .is().min(6)
-    .is().max(18)
-    .has().digits(1)
+const passwordValidator = require("../validators/passwordValidator");
 
 const passwordErrorMessage = "Passport must be between 6 and 18 in length, and must contain at least 1 digit."
 
@@ -22,7 +17,7 @@ const createUser = async (req, res) => {
     if (exists) return res.status(200).json({type: "error", message: "The account already exists."})
 
     const emailValid = emailValidator.validate(email)
-    const passwordValid = passwordSchema.validate(cleanPassword)
+    const passwordValid = passwordValidator.validate(cleanPassword)
 
     if (!emailValid || !passwordValid) {
         return res.status(200).json({
