@@ -68,8 +68,17 @@ const initialize = (passport) => {
             }
         }))
 
+    const cookieExtractor = function(req) {
+        let token = null;
+        if (req && req.cookies)
+        {
+            token = req.cookies['jwt'];
+        }
+        return token;
+    };
+
     const jwtOptions = {
-        jwtFromRequest: ExtractJwt.fromHeader("Authorization"),
+        jwtFromRequest: cookieExtractor,
         secretOrKey: "secret"
     }
 
