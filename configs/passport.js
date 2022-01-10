@@ -46,7 +46,8 @@ const initialize = (passport) => {
                     if (!newUser) {
                         newUser = await User.create({
                             email: profile.emails[0].value,
-                            name: profile.displayName
+                            name: profile.displayName ?? "Anonymous",
+                            profilePicturePath: "default_profile_picture.jpg",
                         })
                     }
 
@@ -58,7 +59,8 @@ const initialize = (passport) => {
                     if (!user) {
                         user = await User.create({
                             email: profile.emails[0].value,
-                            name: profile.displayName
+                            name: profile.displayName ?? "Anonymous",
+                            profilePicturePath: "default_profile_picture.jpg",
                         })
                     }
                     cb(null, user.toJSON())

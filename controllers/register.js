@@ -6,11 +6,10 @@ const passwordValidator = require("../validators/passwordValidator");
 const passwordErrorMessage = "Passport must be between 6 and 18 in length, and must contain at least 1 digit."
 
 const createUser = async (req, res) => {
-    const { email, password } = req.body
-    if (!email || !password) return res.status(403).json({type: "error", message: "'email' or 'password' fields are missing"})
+    const {email, password} = req.body
 
-    const cleanEmail = email.trim()
-    const cleanPassword = password.trim()
+    const cleanEmail = email.trim() ?? ""
+    const cleanPassword = password.trim() ?? ""
 
     const exists = await User.findOne({where: {email: cleanEmail}})
 
@@ -31,10 +30,15 @@ const createUser = async (req, res) => {
     }
 
     try {
-        const newUser = User.build({profilePicturePath: "default_profile_picture.jpg", email: cleanEmail, password: await bcrypt.hash(cleanPassword, 5)})
+        const newUser = User.build({
+            profilePicturePath: "default_profile_picture.jpg",
+            email: cleanEmail,
+            password: await bcrypt.hash(cleanPassword, 5),
+            name: "Anonymous"
+        })
         await newUser.save()
         return res.status(201).redirect("/login")
-    } catch(e) {
+    } catch (e) {
         return res.status(500).json({error: "Something went wrong on the server"})
     }
 }
