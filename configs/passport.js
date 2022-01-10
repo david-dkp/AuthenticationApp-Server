@@ -29,7 +29,7 @@ const initialize = (passport) => {
     passport.use(new GoogleStrategy({
             clientID: process.env["GOOGLE_CLIENT_ID"],
             clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-            callbackURL: 'http://localhost:' + process.env["PORT"] + "/oauth2/redirect/google"
+            callbackURL: process.env.SERVER_URL + "/oauth2/redirect/google"
         },
         async (issuer, profile, cb) => {
             try {
