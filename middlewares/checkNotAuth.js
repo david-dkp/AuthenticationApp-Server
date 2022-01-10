@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 
 const checkNotAuth = ({authRedirect}) => (req, res, next) => {
-    const token = req.cookies["jwt"]
+    const token = req.headers.authorization
     if (!token) {
         return next()
     }
