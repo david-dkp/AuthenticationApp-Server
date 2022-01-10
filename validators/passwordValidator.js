@@ -6,4 +6,8 @@ passwordSchema
     .is().max(18)
     .has().digits(1)
 
-module.exports.validate = passwordSchema.validate
+function validate(password) {
+    return passwordSchema.validate(password)
+}
+
+module.exports.validate = validate
