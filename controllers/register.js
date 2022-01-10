@@ -7,20 +7,20 @@ const passwordErrorMessage = "Passport must be between 6 and 18 in length, and m
 
 const createUser = async (req, res) => {
     const { email, password } = req.body
-    if (!email || !password) return res.status(400).json({type: "error", message: "'email' or 'password' fields are missing"})
+    if (!email || !password) return res.status(403).json({type: "error", message: "'email' or 'password' fields are missing"})
 
     const cleanEmail = email.trim()
     const cleanPassword = password.trim()
 
     const exists = await User.findOne({where: {email: cleanEmail}})
 
-    if (exists) return res.status(200).json({type: "error", message: "The account already exists."})
+    if (exists) return res.status(403).json({type: "error", message: "The account already exists."})
 
     const emailValid = emailValidator.validate(email)
     const passwordValid = passwordValidator.validate(cleanPassword)
 
     if (!emailValid || !passwordValid) {
-        return res.status(200).json({
+        return res.status(403).json({
             type: "error",
             message: "Invalid inputs",
             error: {
@@ -31,7 +31,7 @@ const createUser = async (req, res) => {
     }
 
     try {
-        const newUser = User.build({email: cleanEmail, password: await bcrypt.hash(cleanPassword, 5)})
+        const newUser = User.build({profilePicturePath: "default_profile_picture.jpg", email: cleanEmail, password: await bcrypt.hash(cleanPassword, 5)})
         await newUser.save()
         return res.status(201).redirect("/login")
     } catch(e) {
