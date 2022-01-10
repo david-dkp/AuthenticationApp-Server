@@ -1,4 +1,5 @@
 const express = require("express")
+const cors = require("cors")
 const session = require("express-session")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
@@ -11,7 +12,7 @@ const checkNotAuth = require("./middlewares/checkNotAuth");
 const oauth2Router = require("./routes/oauth2Router");
 const loginRouter = require("./routes/loginRouter")
 const userRouter = require("./routes/userRouter");
-const cors = require("cors")
+const logoutRouter = require("./routes/logoutRouter")
 
 const helmet = require("helmet")
 
@@ -43,6 +44,7 @@ app.use(express.static("pictures"))
 app.use("/login", loginRouter)
 app.use("/oauth2", oauth2Router)
 app.use("/user", userRouter)
+app.use("/logout", logoutRouter)
 
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
 
