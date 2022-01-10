@@ -11,6 +11,7 @@ const checkNotAuth = require("./middlewares/checkNotAuth");
 const oauth2Router = require("./routes/oauth2Router");
 const loginRouter = require("./routes/loginRouter")
 const userRouter = require("./routes/userRouter");
+const cors = require("cors")
 
 const helmet = require("helmet")
 
@@ -22,12 +23,20 @@ database.initialize()
 passportConfig.initialize(passport)
 
 //Middlewares
-app.use(cookieParser())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(session({secret: "secret"}))
-app.use(passport.initialize())
 app.use(helmet())
+const corsConfig = {
+    origin: true,
+    credentials: true,
+};
+
+app.use(cors(corsConfig));
+app.options('*', cors(corsConfig));
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(session({secret: "secret", resave: false}))
+app.use(cookieParser())
+app.use(passport.initialize())
 app.use(express.static("pictures"))
 
 //Routes

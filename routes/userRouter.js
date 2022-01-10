@@ -5,8 +5,7 @@ const Router = require("express").Router
 const router = Router()
 
 router.use(checkAuth({notAuthRedirect: "/login"}))
-
 router.get("/", user.getAuthUser)
-router.put("/", user.updateAuthUser)
+router.put("/", user.uploadPicture.single("photoFile"), user.updateAuthUser)
 
 module.exports = router

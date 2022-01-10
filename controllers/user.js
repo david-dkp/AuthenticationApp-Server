@@ -2,25 +2,38 @@ const User = require("../models/User");
 const {getStaticUrlFromPath} = require("../utils/fileUtils");
 const emailValidator = require("email-validator")
 const passwordValidator = require("../validators/passwordValidator")
+const multer = require("multer");
+const path = require("path");
 
+const userStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join("./pictures"))
+    },
+    filename: function (req, file, cb) {
+        if (!req.user.id) {
+            return cb(new Error("The user is not authenticated"))
+        }
+        cb(null, req.user.id.toString() + "_profile_picture" + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({storage: userStorage})
+
+const uploadPicture = upload
 
 const getAuthUser = async (req, res) => {
-    const allowedAttributes = ["id", "name", "bio", "phoneNumber", "email", "profilePicturePath"]
-
     try {
-        const data = await User.findByPk(req.user.id, {attributes: allowedAttributes})
+        const user = req.user
+        delete user.password
 
-        const user = data.toJSON()
-
-        if (user.profilePicturePath !== null || user.profilePicturePath !== "") {
+        if (user.profilePicturePath && user.profilePicturePath !== "") {
             user.photoUrl = getStaticUrlFromPath(user.profilePicturePath)
+            delete user.profilePicturePath
         }
 
-        delete user.profilePicturePath
-
-        return res.status(200).json(user)
+        return res.status(200).json({type: "success", data: user})
     } catch (e) {
-        return res.status(500)
+        return res.status(500).json({type: "error", message: "Something went wrong, please try again."})
     }
 }
 
@@ -59,6 +72,7 @@ const updateAuthUser = async (req, res) => {
         }
 
         await User.update(updateUser, {
+            where: {id: req.user.id},
             fields: ["name", "email", "password", "bio", "phoneNumber", "profilePicturePath"]
         })
         res.status(200).json({type: "success"})
@@ -69,5 +83,6 @@ const updateAuthUser = async (req, res) => {
 
 module.exports = {
     getAuthUser,
-    updateAuthUser
+    updateAuthUser,
+    uploadPicture
 }
