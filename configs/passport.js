@@ -70,7 +70,7 @@ const initialize = (passport) => {
 
     const jwtOptions = {
         jwtFromRequest: ExtractJwt.fromHeader("authorization"),
-        secretOrKey: "secret"
+        secretOrKey: process.env.JWT_SECRET
     }
 
     passport.use(new JwtStrategy(jwtOptions, async (payload, done) => {
