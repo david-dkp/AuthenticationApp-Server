@@ -1,4 +1,4 @@
-const { Sequelize } = require("sequelize")
+const {Sequelize} = require("sequelize")
 const User = require("../models/User")
 const FederatedCredential = require("../models/FederatedCredential")
 

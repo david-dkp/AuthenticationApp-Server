@@ -92,10 +92,10 @@ const initialize = (passport) => {
 
     }))
 
-    passport.serializeUser(function(user, done) {
+    passport.serializeUser(function (user, done) {
         done(null, user)
     })
-    passport.deserializeUser(function(obj, done) {
+    passport.deserializeUser(function (obj, done) {
         done(null, obj)
     })
 }
