@@ -11,5 +11,6 @@ router.post("/", passport.authenticate("local", {session: false}), createAndSend
 
 router.get("/google", passport.authenticate("google", {session: false, scope: ["email", "profile"]}))
 
+router.get("/github", passport.authenticate("github", {scope: ['user:email', "read:user"], session: false}))
 
 module.exports = router

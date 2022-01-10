@@ -10,4 +10,6 @@ router.use(checkNotAuth({authRedirect: "/"}))
 
 router.get("/redirect/google", passport.authenticate("google"), createAndSendJwt)
 
+router.get("/redirect/github", passport.authenticate("github"), createAndSendJwt)
+
 module.exports = router
