@@ -1,7 +1,7 @@
 const path = require("path")
 
 const getStaticUrlFromPath = (fullPath) => {
-    return "http://localhost:" + process.env.PORT + "/" + path.basename(fullPath)
+    return process.env.SERVER_URL + "/" + path.basename(fullPath)
 }
 
 module.exports = {

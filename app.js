@@ -15,6 +15,7 @@ const userRouter = require("./routes/userRouter");
 const logoutRouter = require("./routes/logoutRouter")
 
 const helmet = require("helmet")
+const path = require("path");
 
 const app = express()
 
@@ -38,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({secret: process.env.SESSION_SECRET, resave: false}))
 app.use(cookieParser())
 app.use(passport.initialize())
-app.use(express.static("pictures"))
+app.use(express.static(path.join(__dirname + "/pictures")))
 
 //Routes
 app.use("/login", loginRouter)
