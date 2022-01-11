@@ -4,7 +4,7 @@ const FederatedCredential = require("../models/FederatedCredential");
 
 //Strategies
 const LocalStrategy = require("passport-local").Strategy
-const GoogleStrategy = require("passport-google-oidc")
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GithubStrategy = require("passport-github2").Strategy
 const JwtStrategy = require("passport-jwt").Strategy
 const ExtractJwt = require("passport-jwt").ExtractJwt
@@ -69,9 +69,10 @@ const initialize = (passport) => {
     passport.use(new GoogleStrategy({
             clientID: process.env["GOOGLE_CLIENT_ID"],
             clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
-            callbackURL: process.env.SERVER_URL + "/oauth2/redirect/google"
+            callbackURL: process.env.SERVER_URL + "/oauth2/redirect/google",
+            scope: ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]
         },
-        async (issuer, profile, cb) => handleProviderLogin(issuer, profile, cb)))
+        async (accessToken, refreshToken, profile, cb) => handleProviderLogin("https://google.com", profile, cb)))
 
     passport.use(new GithubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
