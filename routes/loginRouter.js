@@ -9,8 +9,8 @@ router.use(checkNotAuth({authRedirect: "/"}))
 
 router.post("/", passport.authenticate("local", {session: false}), createAndSendJwt)
 
-router.get("/google", passport.authenticate("google", {session: false}))
+router.get("/google", passport.authenticate("google"))
 
-router.get("/github", passport.authenticate("github", {scope: ['user:email', "read:user"], session: false}))
+router.get("/github", passport.authenticate("github", {scope: ['user:email', "read:user"]}))
 
 module.exports = router
