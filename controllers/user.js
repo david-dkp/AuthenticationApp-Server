@@ -4,6 +4,7 @@ const emailValidator = require("email-validator")
 const passwordValidator = require("../validators/passwordValidator")
 const multer = require("multer");
 const path = require("path");
+const bcrypt = require("bcrypt");
 
 const userStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -70,6 +71,8 @@ const updateAuthUser = async (req, res) => {
                 }
             })
         }
+
+        updateUser.password = await bcrypt.hash(updateUser.password, 5)
 
         await User.update(updateUser, {
             where: {id: req.user.id},
