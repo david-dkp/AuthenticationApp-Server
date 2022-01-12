@@ -72,7 +72,9 @@ const updateAuthUser = async (req, res) => {
             })
         }
 
-        updateUser.password = await bcrypt.hash(updateUser.password, 5)
+        if (updateUser.password) {
+            updateUser.password = await bcrypt.hash(updateUser.password, 5)
+        }
 
         await User.update(updateUser, {
             where: {id: req.user.id},
