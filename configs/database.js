@@ -1,11 +1,12 @@
 const {Sequelize} = require("sequelize")
 const User = require("../models/User")
 const FederatedCredential = require("../models/FederatedCredential")
+const path = require("path");
 
 const initialize = async () => {
     const sequelize = new Sequelize({
         dialect: "sqlite",
-        storage: "databases/database.sqlite",
+        storage: path.join(process.cwd(), "databases/database.sqlite"),
         logging: false,
     })
     await sequelize.authenticate()
