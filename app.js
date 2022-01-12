@@ -36,7 +36,7 @@ app.options('*', cors(corsConfig));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(session({secret: process.env.SESSION_SECRET, resave: false}))
+app.use(session({secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false}))
 app.use(cookieParser())
 app.use(passport.initialize())
 app.use(express.static(path.join(__dirname + "/pictures")))

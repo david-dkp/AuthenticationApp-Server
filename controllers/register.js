@@ -37,7 +37,7 @@ const createUser = async (req, res) => {
             name: "Anonymous"
         })
         await newUser.save()
-        return res.status(201).redirect("/login")
+        return res.status(302).redirect("/login?successful_register=true")
     } catch (e) {
         return res.status(500).json({error: "Something went wrong on the server"})
     }

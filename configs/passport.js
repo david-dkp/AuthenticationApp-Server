@@ -77,8 +77,8 @@ const initialize = (passport) => {
     passport.use(new GithubStrategy({
         clientID: process.env.GITHUB_CLIENT_ID,
         clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: process.env.SERVER_URL+"/oauth2/redirect/github",
-        scope: [ 'user:email' ]
+        callbackURL: process.env.SERVER_URL + "/oauth2/redirect/github",
+        scope: ['user:email']
     }, (accessToken, refreshToken, profile, cb) => handleProviderLogin("https://github.com", profile, cb)))
 
     const jwtOptions = {
