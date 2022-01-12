@@ -15,7 +15,7 @@ const createAndSendJwt = (req, res) => {
                 })
             }
 
-            return res.status(200).cookie("jwt", token).redirect(process.env.CLIENT_URL + "/")
+            return res.status(302).cookie("jwt", token).redirect(process.env.CLIENT_URL + "/")
         }
     )
 }
