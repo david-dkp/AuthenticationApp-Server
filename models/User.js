@@ -13,8 +13,7 @@ class User extends Model {
                 type: DataTypes.TEXT,
             },
             email: {
-                type: DataTypes.TEXT,
-                allowNull: false
+                type: DataTypes.TEXT
             },
             password: {
                 type: DataTypes.TEXT,
@@ -27,8 +26,14 @@ class User extends Model {
             },
             profilePicturePath: {
                 type: DataTypes.TEXT
+            },
+            isGuess: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: false,
+                allowNull: false,
             }
-        }, {timestamps: false, sequelize, modelName: "User", tableName: "user_table"})
+
+        }, {sequelize, modelName: "User", tableName: "user_table"})
     }
 }
 

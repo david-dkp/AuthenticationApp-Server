@@ -6,7 +6,7 @@ const path = require("path");
 const initialize = async () => {
     const sequelize = new Sequelize({
         dialect: "sqlite",
-        storage: path.join(__dirname, "databases/database.sqlite"),
+        storage: path.join(process.cwd(), "databases/database.sqlite"),
         logging: false,
     })
     await sequelize.authenticate()

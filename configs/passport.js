@@ -1,13 +1,17 @@
 const bcrypt = require("bcrypt")
 const User = require("../models/User");
 const FederatedCredential = require("../models/FederatedCredential");
+const schedule = require("node-schedule")
 
 //Strategies
 const LocalStrategy = require("passport-local").Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const GithubStrategy = require("passport-github2").Strategy
 const JwtStrategy = require("passport-jwt").Strategy
+const CustomStrategy = require("passport-custom").Strategy
+
 const ExtractJwt = require("passport-jwt").ExtractJwt
+
 
 const handleProviderLogin = async (provider, profile, cb) => {
     try {
@@ -99,6 +103,30 @@ const initialize = (passport) => {
             return done(null, user.toJSON())
         } catch (e) {
             return done(e)
+        }
+
+    }))
+
+    passport.use("guess", new CustomStrategy(async (req, cb) => {
+
+        try {
+            const name = "Guest"+(Math.round(Math.random() * 5000)).toString()
+            const user = await User.create({
+                name,
+                profilePicturePath: "default_profile_picture.jpg",
+                isGuess: true,
+            })
+
+            const deleteDate = new Date(user.createdAt)
+            deleteDate.setDate(deleteDate.getDate() + 1)
+
+            schedule.scheduleJob(deleteDate, async () => {
+                await user.destroy()
+            })
+
+            cb(null, user.toJSON())
+        } catch (e) {
+            cb(e)
         }
 
     }))

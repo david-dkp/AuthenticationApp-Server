@@ -16,6 +16,7 @@ const logoutRouter = require("./routes/logoutRouter")
 
 const helmet = require("helmet")
 const path = require("path");
+const User = require("./models/User");
 
 const app = express()
 
@@ -50,7 +51,8 @@ app.use("/logout", logoutRouter)
 app.post("/register", checkNotAuth({authRedirect: "/"}), register.createUser)
 
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT, async () => {
+    setTimeout(async () => {await User.destroy({where: { isGuess: true }})}, 1000)
     console.log(`Server is running on port: ${process.env.PORT}`)
 })
 

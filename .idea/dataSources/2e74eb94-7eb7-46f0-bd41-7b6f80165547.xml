@@ -1406,7 +1406,6 @@
     </column>
     <column id="510" parent="494" name="email">
       <DataType>TEXT|0s</DataType>
-      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
     <column id="511" parent="494" name="password">
@@ -1425,7 +1424,23 @@
       <DataType>TEXT|0s</DataType>
       <Position>7</Position>
     </column>
-    <key id="515" parent="494">
+    <column id="515" parent="494" name="isGuess">
+      <DataType>TINYINT(1)|0s</DataType>
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>8</Position>
+    </column>
+    <column id="516" parent="494" name="createdAt">
+      <DataType>DATETIME|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="517" parent="494" name="updatedAt">
+      <DataType>DATETIME|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>10</Position>
+    </column>
+    <key id="518" parent="494">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
